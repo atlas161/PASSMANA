@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PASSMANA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function genererMotDePasse() {
+            const longueur = document.getElementById('longueur').value;
+            const inclure_majuscules = document.getElementById('inclure_majuscules').checked;
+            const inclure_minuscules = document.getElementById('inclure_minuscules').checked;
+            const inclure_chiffres = document.getElementById('inclure_chiffres').checked;
+            const inclure_speciaux = document.getElementById('inclure_speciaux').checked;
+
+            fetch(`/generer_mot_de_passe?longueur=${longueur}&inclure_majuscules=${inclure_majuscules}&inclure_minuscules=${inclure_minuscules}&inclure_chiffres=${inclure_chiffres}&inclure_speciaux=${inclure_speciaux}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('mot_de_passe').value = data.mot_de_passe;
+                });
+        }
+
+        function confirmerSuppression(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
+                document.getElementById('supprimer-form-' + id).submit();
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>PASSMANA</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form action="{{ url_for('ajouter_mot_de_passe') }}" method="post">
+        <label for="site">Site :</label>
+        <input type="text" id="site" name="site" required>
+        <label for="nom_utilisateur">Nom d'utilisateur :</label>
+        <input type="text" id="nom_utilisateur" name="nom_utilisateur" required>
+        <label for="mot_de_passe">Mot de passe :</label>
+        <input type="text" id="mot_de_passe" name="mot_de_passe" required>
+        <div class="complexity-options">
+            <label for="longueur">Longueur :</label>
+            <input type="number" id="longueur" name="longueur" value="12" min="8" required>
+            <label for="inclure_majuscules">[A-Z]</label>
+            <input type="checkbox" id="inclure_majuscules" name="inclure_majuscules" checked>
+            <label for="inclure_minuscules">[a-z]</label>
+            <input type="checkbox" id="inclure_minuscules" name="inclure_minuscules" checked>
+            <label for="inclure_chiffres">[0-9]</label>
+            <input type="checkbox" id="inclure_chiffres" name="inclure_chiffres" checked>
+            <label for="inclure_speciaux">[*$/;]</label>
+            <input type="checkbox" id="inclure_speciaux" name="inclure_speciaux" checked>
+        </div>
+        <button type="button" onclick="genererMotDePasse()">Générer</button>
+        <button type="submit">Ajouter</button>
+    </form>
+    <h2>Rechercher</h2>
+    <form action="{{ url_for('index') }}" method="get">
+        <input type="text" name="query" value="{{ query }}" placeholder="Rechercher...">
+        <button type="submit">Rechercher</button>
+    </form>
+    <h2>Mots de Passe</h2>
+    <div class="table-container">
+        <div class="table-header">
+            <div class="column">Site</div>
+            <div class="column">Nom d'utilisateur</div>
+            <div class="column">Mot de passe</div>
+            <div class="actions-header">Actions</div>
+        </div>
+        <ul class="password-list">
+            {% for mot_de_passe in mots_de_passe %}
+                <li>
+                    <div class="column">{{ mot_de_passe.site }}</div>
+                    <div class="column">{{ mot_de_passe.nom_utilisateur }}</div>
+                    <div class="column">{{ mot_de_passe.mot_de_passe }}</div>
+                    <div class="actions">
+                        <form action="{{ url_for('modifier_mot_de_passe', id=mot_de_passe.id) }}" method="get" style="display:inline;">
+                            <button type="submit">Modifier</button>
+                        </form>
+                        <form id="supprimer-form-{{ mot_de_passe.id }}" action="{{ url_for('supprimer_mot_de_passe', id=mot_de_passe.id) }}" method="post" style="display:inline;">
+                            <button type="button" class="delete-button" onclick="confirmerSuppression({{ mot_de_passe.id }})">Supprimer</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

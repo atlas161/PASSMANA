@@ -1,0 +1,121 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    background-color: #2196F3;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.delete-button {
+    background-color: #FF0000;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-header {
+    display: flex;
+    background-color: #f1f1f1;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd;
+}
+
+.table-header .column, .password-list .column {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+}
+
+.table-header .actions-header, .password-list .actions {
+    flex: 0 0 auto;
+    text-align: center;
+    padding: 10px;
+}
+
+.password-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ddd;
+}
+
+.password-list li {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.password-list li:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.complexity-options {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.complexity-options label {
+    margin-right: 10px;
+}
+
+.complexity-options input[type="number"] {
+    width: 50px;
+    margin-right: 20px;
+}
+
+.complexity-options input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+}
+
+.flashes li {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.flashes li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
