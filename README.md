@@ -1,6 +1,6 @@
 # PASSMANA
 
-![PASSMANA Screenshot](https://raw.githubusercontent.com/atlas161/PASSMANA/main/medias/Screenshot.png)
+![PASSMANA Screenshot](https://raw.githubusercontent.com/atlas161/PASSMANA/main/medias/screenshot.png)
 
 **PASSMANA** est un projet Python de seconde année d'école d'informatique. Ce programme est un gestionnaire de mots de passe simple et sécurisé, développé avec Flask et MariaDB. Il permet de stocker, générer et rechercher des mots de passe.
 
